@@ -2,332 +2,288 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>ai</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/11.1.0/marked.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
+<title>ai</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #111;
-    --text: #eee;
-    --accent: #0b66ff;
-    --bubble-user: #0b66ff;
-    --bubble-ai: #222;
-  }
-
-  body.light {
-    --bg: #fafafa;
-    --text: #111;
-    --bubble-user: #0b66ff;
-    --bubble-ai: #e6e6e6;
-  }
-
-  body.celeste {
-    --bg: #cfe9ff;
-    --text: #08324a;
-    --bubble-user: #6bb8ff;
-    --bubble-ai: #a5d3ff;
-  }
-
-  body.midnight {
-    --bg: #050712;
-    --text: #d0d8ff;
-    --bubble-user: #2d3a6f;
-    --bubble-ai: #111a3c;
-  }
-
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Poppins", sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  header {
-    padding: 1rem;
-    background: rgba(0,0,0,0.25);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    backdrop-filter: blur(5px);
-  }
-
-  #githubBox {
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: .4rem;
-    padding: .4rem .8rem;
-    border-radius: .4rem;
-    background: rgba(255,255,255,0.1);
-  }
-
-  #githubBox:hover::after {
-    content: "Source Code";
-    position: absolute;
-    top: 120%;
-    left: 0;
-    background: #000;
-    padding: .4rem .7rem;
-    border-radius: .3rem;
-    color: white;
-    font-size: .8rem;
-    opacity: .9;
-    white-space: nowrap;
-  }
-
-  #chat {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: .7rem;
-  }
-
-  .bubble {
-    max-width: 70%;
-    padding: .8rem 1rem;
-    border-radius: 1rem;
-    line-height: 1.5;
-  }
-
-  .user {
-    align-self: flex-end;
-    background: var(--bubble-user);
-    color: #fff;
-    border-bottom-right-radius: .3rem;
-  }
-
-  .ai {
-    align-self: flex-start;
-    background: var(--bubble-ai);
-    color: var(--text);
-    border-bottom-left-radius: .3rem;
-  }
-
-  .actions {
-    display: flex;
-    gap: .7rem;
-    font-size: .8rem;
-    opacity: .7;
-    cursor: pointer;
-  }
-
-  #inputBar {
-    padding: 1rem;
-    border-top: 1px solid #333;
-    display: flex;
-    gap: .5rem;
-  }
-
-  #msg {
-    flex: 1;
-    padding: .8rem;
-    border-radius: 1rem;
-    border: none;
-    outline: none;
-    background: #222;
-    color: #fff;
-  }
-
-  #send {
-    padding: .8rem 1.4rem;
-    border-radius: 1rem;
-    border: none;
-    background: var(--accent);
-    color: white;
-    cursor: pointer;
-  }
-
-  /* Modal */
-  #nameModal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  #modalBox {
-    background: #222;
-    padding: 2rem;
-    border-radius: .8rem;
-    text-align: center;
-  }
-
-  select {
-    padding: .4rem;
-    border-radius: .4rem;
-  }
+:root {
+  --bg-dark: #0b0f2e;
+  --fg-dark: #f5f5f5;
+  --bg-light: #d9f0ff;
+  --fg-light: #0b0f2e;
+  --accent: #0b66ff;
+  --radius: 14px;
+}
+body {
+  margin:0;
+  font-family:"Poppins",sans-serif;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  background: var(--bg-dark);
+  color: var(--fg-dark);
+  transition: background 0.5s, color 0.5s;
+}
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 20px;
+  background:rgba(0,0,0,0.5);
+  color:#fff;
+}
+header a {
+  text-decoration:none;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  position:relative;
+}
+header a:hover .tooltip {
+  opacity:1;
+  visibility:visible;
+}
+.tooltip {
+  position:absolute;
+  top:120%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#222;
+  color:#fff;
+  padding:5px 10px;
+  border-radius:8px;
+  font-size:12px;
+  opacity:0;
+  visibility:hidden;
+  transition:0.3s;
+}
+#chat {
+  flex:1;
+  overflow-y:auto;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  background: linear-gradient(135deg, #0b66ff, #222222);
+  background-size: 400% 400%;
+  animation: gradientAnim 15s ease infinite;
+}
+@keyframes gradientAnim {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+.message {
+  max-width:70%;
+  padding:10px 15px;
+  border-radius:var(--radius);
+  position:relative;
+  word-break:break-word;
+}
+.message.user {
+  align-self:flex-end;
+  background:rgba(11,102,255,0.8);
+  color:#fff;
+  border-bottom-right-radius:0;
+}
+.message.bot {
+  align-self:flex-start;
+  background:rgba(0,0,0,0.5);
+  color:#fff;
+  border-bottom-left-radius:0;
+}
+.message .meta {
+  font-size:10px;
+  color:rgba(255,255,255,0.7);
+  margin-top:2px;
+}
+.message .actions {
+  display:flex;
+  gap:5px;
+  font-size:12px;
+  margin-top:5px;
+}
+.message .actions span {
+  cursor:pointer;
+  padding:2px 4px;
+  border-radius:4px;
+  background:rgba(255,255,255,0.1);
+  transition:0.2s;
+}
+.message .actions span:hover {
+  background:rgba(255,255,255,0.3);
+}
+#inputBar {
+  display:flex;
+  padding:10px 20px;
+  gap:10px;
+  background:rgba(0,0,0,0.3);
+}
+#inputBar input {
+  flex:1;
+  padding:10px 15px;
+  border-radius:50px;
+  border:none;
+  outline:none;
+  font-size:16px;
+}
+#inputBar button {
+  padding:10px 20px;
+  border:none;
+  border-radius:50px;
+  background:var(--accent);
+  color:#fff;
+  cursor:pointer;
+}
+footer {
+  padding:10px 20px;
+  text-align:center;
+  font-size:12px;
+  color:rgba(255,255,255,0.7);
+  background:rgba(0,0,0,0.3);
+}
+#settings {
+  position:absolute;
+  top:10px;
+  right:10px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+#settings label {
+  font-size:12px;
+}
 </style>
 </head>
-
-<body class="dark">
+<body>
 
 <header>
-  <div><strong>AI</strong> <span style="opacity: .5">(beta)</span></div>
-  <div>made by ethan</div>
-  <div style="display: flex; gap: 1rem; align-items: center;">
-    <select id="themeSelect">
-      <option value="dark">dark</option>
-      <option value="light">light</option>
-      <option value="celeste">celeste</option>
-      <option value="midnight">midnight sky</option>
-    </select>
-
-    <div id="githubBox" onclick="window.open('https://github.com/', '_blank')">
-      <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="20">
-      Source
-    </div>
-  </div>
+  <div>Made by Ethan</div>
+  <a href="https://github.com/ethanytangcodes/ai/" target="_blank">
+    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2 .37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.58.82-2.13-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 012 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.55.82 1.26.82 2.13 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+    <span class="tooltip">source Code</span>
+  </a>
 </header>
 
 <div id="chat"></div>
 
 <div id="inputBar">
-  <input id="msg" placeholder="send a message...">
-  <button id="send">send</button>
+  <input type="text" id="userInput" placeholder="type a message..." />
+  <button id="sendBtn">send</button>
 </div>
 
-<!-- NAME MODAL -->
-<div id="nameModal">
-  <div id="modalBox">
-    <h2>what should we call you?</h2>
-    <input id="nameInput" placeholder="your name..." style="padding:.6rem;">
-    <br><br>
-    <button onclick="saveName()" style="padding:.6rem 1rem;">Continue</button>
-  </div>
+<div id="settings">
+  <label>Theme:
+    <select id="themeSelect">
+      <option value="dark">dark</option>
+      <option value="light">light</option>
+    </select>
+  </label>
+  <label>color 1:<input type="color" id="color1" value="#0b66ff"></label>
+  <label>color 2:<input type="color" id="color2" value="#222222"></label>
+  <button id="applyGradient">apply</button>
 </div>
+
+<footer>© 2025 Ethan Tang. All rights reserved.</footer>
 
 <script>
-let username = localStorage.getItem("username") || "";
+const chat = document.getElementById("chat");
+const userInput = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
+const themeSelect = document.getElementById("themeSelect");
+const color1Input = document.getElementById("color1");
+const color2Input = document.getElementById("color2");
+const applyGradient = document.getElementById("applyGradient");
 
-if (!username) {
-  document.getElementById("nameModal").style.display = "flex";
-} else {
-  document.getElementById("nameModal").style.display = "none";
-}
-
-function saveName() {
-  const n = document.getElementById("nameInput").value.trim();
-  username = n || "User";
-  localStorage.setItem("username", username);
-  document.getElementById("nameModal").style.display = "none";
-}
-
-document.getElementById("themeSelect").value = localStorage.getItem("theme") || "dark";
-setTheme(document.getElementById("themeSelect").value);
-
-document.getElementById("themeSelect").onchange = e => {
-  setTheme(e.target.value);
+// Theme switching
+themeSelect.onchange = () => {
+  if(themeSelect.value === "dark") {
+    document.body.style.background = "#0b0f2e";
+    document.body.style.color = "#f5f5f5";
+  } else {
+    document.body.style.background = "#d9f0ff";
+    document.body.style.color = "#0b0f2e";
+  }
 };
 
-function setTheme(t) {
-  document.body.className = t;
-  localStorage.setItem("theme", t);
+// Gradient applying
+applyGradient.onclick = () => {
+  const c1 = color1Input.value;
+  const c2 = color2Input.value;
+  chat.style.background = `linear-gradient(135deg, ${c1}, ${c2})`;
+  chat.style.backgroundSize = "400% 400%";
+  chat.style.animation = "gradientAnim 15s ease infinite";
+};
+
+// Helper to add messages
+function addMessage(content, sender="bot") {
+  const div = document.createElement("div");
+  div.className = "message " + sender;
+  div.innerHTML = content + `<div class="meta">${new Date().toLocaleTimeString()}</div>
+  <div class="actions">
+    <span onclick="copyMsg(this)">copy</span>
+    <span onclick="redoMsg(this)">redo</span>
+  </div>`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
 }
 
-function appendMessage(role, text, isHTML = false) {
-  const wrap = document.createElement("div");
-
-  const bubble = document.createElement("div");
-  bubble.className = "bubble " + (role === "user" ? "user" : "ai");
-  bubble.innerHTML = isHTML ? text : text.replace(/\n/g, "<br>");
-
-  wrap.appendChild(bubble);
-
-  const actions = document.createElement("div");
-  actions.className = "actions";
-
-  actions.innerHTML = `
-    <span onclick="copyText(this)">📋</span>
-    <span onclick="readText(this)">🔊</span>
-    <span onclick="redoMessage(this)">⟳</span>
-  `;
-
-  wrap.appendChild(actions);
-
-  document.getElementById("chat").appendChild(wrap);
-  document.getElementById("chat").scrollTop = chat.scrollHeight;
-
-  return bubble;
-}
-
-function copyText(el) {
-  const msg = el.parentElement.previousElementSibling.innerText;
+// Copy/Redo
+function copyMsg(el){
+  const msg = el.closest(".message").childNodes[0].textContent;
   navigator.clipboard.writeText(msg);
+  const toast = document.createElement("div");
+  toast.textContent = "Copied!";
+  toast.style.position = "fixed";
+  toast.style.bottom = "20px";
+  toast.style.right = "20px";
+  toast.style.padding = "10px 20px";
+  toast.style.background = "#0b66ff";
+  toast.style.color="#fff";
+  toast.style.borderRadius="10px";
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(),1500);
+}
+function redoMsg(el){
+  const msg = el.closest(".message").childNodes[0].textContent;
+  addMessage(msg,"user");
+  fetchResponse(msg);
 }
 
-function readText(el) {
-  const msg = el.parentElement.previousElementSibling.innerText;
-  const utter = new SpeechSynthesisUtterance(msg);
-  speechSynthesis.speak(utter);
-}
-
-function redoMessage(el) {
-  const msg = el.parentElement.previousElementSibling.innerText;
-  sendMessage(msg);
-}
-
-document.getElementById("send").onclick = () => sendMessage();
-document.getElementById("msg").addEventListener("keypress", e => {
-  if (e.key === "Enter") sendMessage();
+// Send
+sendBtn.onclick = () => {
+  const msg = userInput.value.trim();
+  if(!msg) return;
+  addMessage(msg,"user");
+  userInput.value="";
+  fetchResponse(msg);
+};
+userInput.addEventListener("keydown", e=>{
+  if(e.key==="Enter") sendBtn.click();
 });
 
-async function sendMessage(prefilled = null) {
-  const input = document.getElementById("msg");
-  const text = prefilled || input.value.trim();
-  if (!text) return;
-
-  appendMessage("user", text);
-  input.value = "";
-
-  const aiBubble = appendMessage("ai", "...");
-
-  const response = await fetch("https://ai.ethantytang11.workers.dev/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: text })
+// Fetch from worker
+async function fetchResponse(msg){
+  const res = await fetch("https://ai.ethantytang11.workers.dev/api/chat",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({message: msg})
   });
-
-  const reader = response.body.getReader();
+  const reader = res.body.getReader();
   const decoder = new TextDecoder();
-
-  aiBubble.innerHTML = "";
-
-  while (true) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    const chunk = decoder.decode(value);
-
-    chunk.split("\n").forEach(line => {
-      if (!line.startsWith("data:")) return;
-      const json = line.replace("data:", "").trim();
-      if (json === "[DONE]") return;
-
-      try {
-        const parsed = JSON.parse(json);
-        const content = parsed.choices[0].delta?.content;
-        if (content) {
-          aiBubble.innerHTML += marked.parse(content);
-          hljs.highlightAll();
-        }
-      } catch {}
-    });
-
-    document.getElementById("chat").scrollTop = chat.scrollHeight;
+  let botMsg="";
+  while(true){
+    const {done,value}=await reader.read();
+    if(done) break;
+    botMsg += decoder.decode(value);
+    chat.lastChild.querySelector(".meta").textContent = new Date().toLocaleTimeString();
   }
+  addMessage(botMsg,"bot");
 }
-</script>
 
+</script>
 </body>
 </html>
